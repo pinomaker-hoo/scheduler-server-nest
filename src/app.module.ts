@@ -13,7 +13,6 @@ import { TodosModule } from './todos/todos.module'
     TodosModule,
     GroupModule,
     GroupUserModule,
-
     GroupTodosModule,
     ConfigModule.forRoot({
       isGlobal: true,

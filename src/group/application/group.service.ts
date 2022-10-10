@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { User } from 'src/auth/domain/user.entity'
+import { GroupUserService } from 'src/groupUser/application/groupUser.service'
 import { Group } from '../domain/group.entity'
 import { SaveGroupDto } from '../dto/group.save.dto'
 import { GroupRepository } from '../infrastructure/group.repository'
@@ -17,6 +18,7 @@ export class GroupService {
       password: body.password,
       memberCount: body.memberCount,
     })
+
     return await this.groupRepository.save(group)
   }
 

@@ -8,6 +8,7 @@ import { GroupUserController } from './ui/groupUser.controller'
 @Module({
   imports: [TypeOrmModule.forFeature([GroupUserRepository]), GroupModule],
   providers: [GroupUserService],
+  exports: [GroupUserService],
   controllers: [GroupUserController],
 })
 export class GroupUserModule {}
