@@ -9,6 +9,7 @@ export class GroupService {
   constructor(private readonly groupRepository: GroupRepository) {}
 
   async saveGroup(madePerson: User, body: SaveGroupDto): Promise<Group> {
+    console.log(madePerson)
     const group = this.groupRepository.create({
       madePerson,
       name: body.name,
@@ -20,10 +21,14 @@ export class GroupService {
   }
 
   async getGroupList(): Promise<Group[]> {
-    return await this.groupRepository.find()
+    const data = await this.groupRepository.find({ relations: ['madePerson'] })
+    console.log(data)
+    return data
   }
 
   async findGroupByIdx(idx: number): Promise<Group> {
-    return await this.groupRepository.findOne({ where: { idx } })
+    return await this.groupRepository.findOne({
+      where: { idx },
+    })
   }
 }

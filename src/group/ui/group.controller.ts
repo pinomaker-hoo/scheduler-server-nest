@@ -16,6 +16,6 @@ export class GroupController {
   @Post()
   @UseGuards(JwtGuard)
   async saveGroup(@Req() req, @Body() body: SaveGroupDto): Promise<Group> {
-    return await this.groupService.saveGroup(req.body, body)
+    return await this.groupService.saveGroup(req.user, body)
   }
 }
