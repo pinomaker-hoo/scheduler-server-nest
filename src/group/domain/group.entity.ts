@@ -1,5 +1,6 @@
 import { User } from 'src/auth/domain/user.entity'
 import { BaseTimeEntity } from 'src/common/entity/baseTime.entity'
+import { GroupTodos } from 'src/groupTodos/domain/groupTodos.entity'
 import { GroupUser } from 'src/groupUser/domain/groupUser.entity'
 import {
   Column,
@@ -31,4 +32,7 @@ export class Group extends BaseTimeEntity {
 
   @OneToMany((type) => GroupUser, (groupUser) => groupUser.group)
   groupUser: GroupUser[]
+
+  @OneToMany((type) => GroupTodos, (groupTodos) => groupTodos.group)
+  groupTodos: GroupTodos[]
 }

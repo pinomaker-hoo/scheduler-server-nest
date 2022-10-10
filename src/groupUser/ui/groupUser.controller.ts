@@ -14,9 +14,10 @@ import { GroupUserService } from '../application/groupUser.service'
 export class GroupUserController {
   constructor(private readonly groupUserService: GroupUserService) {}
 
-  @Post('/id')
+  @Post('/:id')
   @UseGuards(JwtGuard)
   async saveGroupUser(@Req() req, @Param('id') idx: string) {
+    console.log(idx, req.user)
     return await this.groupUserService.saveUser(req.user, Number(idx))
   }
 
