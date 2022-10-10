@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthService } from './application/auth.service';
-import { UserRepository } from './infrastructure/user.repository';
-import { AuthController } from './ui/auth.controller';
-import { JwtModule } from '@nestjs/jwt';
+import { Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { AuthService } from './application/auth.service'
+import { UserRepository } from './infrastructure/user.repository'
+import { AuthController } from './ui/auth.controller'
+import { JwtModule } from '@nestjs/jwt'
+import { LocalStrategy } from './passport/auth.local.strategy'
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { JwtModule } from '@nestjs/jwt';
       }),
     }),
   ],
-  providers: [AuthService],
+  providers: [AuthService, LocalStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}
