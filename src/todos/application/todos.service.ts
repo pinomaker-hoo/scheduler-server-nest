@@ -17,6 +17,7 @@ export class TodosService {
       user,
       date: body.date,
       title: body.title,
+      place: body.place,
     })
     return await this.todosRepository.save(todos)
   }

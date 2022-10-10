@@ -13,6 +13,9 @@ export class Todos extends BaseTimeEntity {
   @Column()
   date: string
 
+  @Column()
+  place: string
+
   @ManyToOne((type) => User, (user) => user.todos)
   user: User
 }
