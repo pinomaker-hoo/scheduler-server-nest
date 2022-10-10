@@ -1,4 +1,6 @@
 import { BaseTimeEntity } from 'src/common/entity/baseTime.entity'
+import { Group } from 'src/group/domain/group.entity'
+import { GroupUser } from 'src/groupUser/domain/groupUser.entity'
 import { Todos } from 'src/todos/domain/todos.entity'
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 
@@ -16,9 +18,12 @@ export class User extends BaseTimeEntity {
   @Column({ type: 'varchar', length: 50 })
   name: string
 
-  @Column({ type: 'varchar', length: 50 })
-  salt: string
-
   @OneToMany((type) => Todos, (todos) => todos.user)
   todos: Todos[]
+
+  @OneToMany((type) => Group, (group) => group.madePerson)
+  groupMadePerson: Group[]
+
+  @OneToMany((type) => GroupUser, (GroupUser) => GroupUser.user)
+  groupUser: GroupUser[]
 }

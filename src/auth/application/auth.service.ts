@@ -13,12 +13,11 @@ export class AuthService {
   ) {}
 
   async localRegister(body: RequestUserSaveDto): Promise<User> {
-    const hashArr: string[] = await this.hashPassword(body.password)
+    const hash = await bcrypt.hash(body.password, 5)
     const user: User = this.userRepository.create({
       name: body.name,
       id: body.id,
-      password: hashArr[0],
-      salt: hashArr[1],
+      password: hash,
     })
     return await this.userRepository.save(user)
   }
