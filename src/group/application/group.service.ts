@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { User } from 'src/auth/domain/user.entity'
 import { GroupUserService } from 'src/groupUser/application/groupUser.service'
 import { Group } from '../domain/group.entity'
@@ -31,5 +31,17 @@ export class GroupService {
     return await this.groupRepository.findOne({
       where: { idx },
     })
+  }
+
+  async findGroupWithTodo(idx: number) {
+    try {
+      return await this.groupRepository.findOne({
+        where: { idx },
+        relations: ['madePerson', 'groupTodos'],
+      })
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
+    }
   }
 }

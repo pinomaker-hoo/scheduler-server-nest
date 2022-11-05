@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common'
 import { JwtGuard } from 'src/auth/passport/auth.jwt.guard'
 import { GroupService } from '../application/group.service'
 import { Group } from '../domain/group.entity'
@@ -17,5 +25,10 @@ export class GroupController {
   @UseGuards(JwtGuard)
   async saveGroup(@Req() req, @Body() body: SaveGroupDto): Promise<Group> {
     return await this.groupService.saveGroup(req.user, body)
+  }
+
+  @Get('/:id')
+  async getGroup(@Param('id') idx: string) {
+    return await this.groupService.findGroupWithTodo(Number(idx))
   }
 }

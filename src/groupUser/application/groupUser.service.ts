@@ -30,7 +30,6 @@ export class GroupUserService {
     try {
       return await this.groupUserRepository.find({
         where: { user },
-        relations: ['group'],
       })
     } catch (err) {
       console.log(err)
