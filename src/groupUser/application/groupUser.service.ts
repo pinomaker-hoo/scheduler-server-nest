@@ -13,6 +13,10 @@ export class GroupUserService {
 
   async saveUser(user: User, groupIdx: number): Promise<GroupUser> {
     try {
+      const findGroupUser = await this.groupUserRepository.findOne({
+        where: { user: user.idx, group: groupIdx },
+      })
+      if (findGroupUser) throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
       const group = await this.groupService.findGroupByIdx(groupIdx)
       const groupUser = this.groupUserRepository.create({ user, group })
       return await this.groupUserRepository.save(groupUser)
