@@ -8,7 +8,10 @@ export class Day extends BaseTimeEntity {
   idx: number
 
   @Column()
-  Date: string
+  date: string
+
+  @Column()
+  name: string
 
   @ManyToOne((type) => User, (user) => user.day)
   user: User
