@@ -9,10 +9,8 @@ export class DayService {
   async saveDay(user: User, name: string, date: string) {
     try {
       const findDay = await this.findDayByUser(user)
-      const updateName = name || findDay.name
-      const updateDate = date || findDay.date
-      if (findDay) return await this.updateDay(findDay, updateName, updateDate)
-      const saveDay: Day = this.dayRepository.create({ date, user })
+      if (findDay) return await this.updateDay(findDay, name, date)
+      const saveDay: Day = this.dayRepository.create({ date, user, name })
       return await this.dayRepository.save(saveDay)
     } catch (err) {
       console.log(err)
@@ -22,7 +20,11 @@ export class DayService {
 
   async updateDay(day: Day, name: string, date: string) {
     try {
-      return await this.dayRepository.update(day, { name, date })
+      console.log(name, date)
+      if (name && date)
+        return await this.dayRepository.update(day, { name, date })
+      if (name) return await this.dayRepository.update(day, { name })
+      if (date) return await this.dayRepository.update(day, { date })
     } catch (err) {
       console.log(err)
       throw new HttpException('bad', HttpStatus.BAD_REQUEST)

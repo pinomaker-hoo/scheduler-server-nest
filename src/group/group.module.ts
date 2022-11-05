@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { GroupUserModule } from 'src/groupUser/groupUser.module'
 import { GroupService } from './application/group.service'
 import { GroupRepository } from './infrastructure/group.repository'
 import { GroupController } from './ui/group.controller'

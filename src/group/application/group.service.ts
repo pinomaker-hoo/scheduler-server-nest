@@ -18,7 +18,6 @@ export class GroupService {
       password: body.password,
       memberCount: body.memberCount,
     })
-
     return await this.groupRepository.save(group)
   }
 
