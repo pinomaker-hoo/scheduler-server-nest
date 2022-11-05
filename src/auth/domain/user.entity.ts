@@ -1,4 +1,5 @@
 import { BaseTimeEntity } from 'src/common/entity/baseTime.entity'
+import { Day } from 'src/day/domain/day.entity'
 import { Group } from 'src/group/domain/group.entity'
 import { GroupUser } from 'src/groupUser/domain/groupUser.entity'
 import { Todos } from 'src/todos/domain/todos.entity'
@@ -26,4 +27,7 @@ export class User extends BaseTimeEntity {
 
   @OneToMany((type) => GroupUser, (GroupUser) => GroupUser.user)
   groupUser: GroupUser[]
+
+  @OneToMany((type) => Day, (day) => day.user)
+  day: Day[]
 }

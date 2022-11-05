@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from './auth/auth.module'
+import { DayModule } from './day/day.module'
 import { GroupModule } from './group/group.module'
 import { GroupTodosModule } from './groupTodos/groupTodos.module'
 import { GroupUserModule } from './groupUser/groupUser.module'
@@ -13,6 +14,7 @@ import { TodosModule } from './todos/todos.module'
     TodosModule,
     GroupModule,
     GroupUserModule,
+    DayModule,
     GroupTodosModule,
     ConfigModule.forRoot({
       isGlobal: true,
