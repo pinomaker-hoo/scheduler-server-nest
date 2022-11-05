@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -25,5 +26,10 @@ export class GroupUserController {
   @UseGuards(JwtGuard)
   async getList(@Req() req) {
     return await this.groupUserService.findGroupUserList(req.user)
+  }
+
+  @Delete('/:id')
+  async deleteGroupUser(@Param('id') idx: string) {
+    return await this.groupUserService.deleteGroupUser(Number(idx))
   }
 }
