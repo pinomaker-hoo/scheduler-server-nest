@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { User } from 'src/auth/domain/user.entity'
-import { GroupUserService } from 'src/groupUser/application/groupUser.service'
 import { Group } from '../domain/group.entity'
 import { SaveGroupDto } from '../dto/group.save.dto'
 import { UpdateGroupDto } from '../dto/group.update.dto'

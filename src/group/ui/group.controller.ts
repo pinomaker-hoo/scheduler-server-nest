@@ -12,7 +12,6 @@ import {
 import { JwtGuard } from 'src/auth/passport/auth.jwt.guard'
 import { ApiResponse } from 'src/common/dto/response.dto'
 import { GroupService } from '../application/group.service'
-import { Group } from '../domain/group.entity'
 import { SaveGroupDto } from '../dto/group.save.dto'
 import { UpdateGroupDto } from '../dto/group.update.dto'
 

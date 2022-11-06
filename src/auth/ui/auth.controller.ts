@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common'
 import { ApiResponse } from 'src/common/dto/response.dto'
 import { AuthService } from '../application/auth.service'
-import { User } from '../domain/user.entity'
 import { RequestUserSaveDto } from '../dto/user.save.dto'
 import { LocalGuard } from '../passport/auth.local.guard'
 

@@ -2,7 +2,6 @@ import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common'
 import { JwtGuard } from 'src/auth/passport/auth.jwt.guard'
 import { ApiResponse } from 'src/common/dto/response.dto'
 import { TodosService } from '../application/todos.service'
-import { Todos } from '../domain/todos.entity'
 import { SaveTodosDto } from '../dto/todos.save.dto'
 
 @Controller('todos')

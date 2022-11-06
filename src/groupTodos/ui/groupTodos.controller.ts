@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common'
 import { ApiResponse } from 'src/common/dto/response.dto'
 import { GroupTodosService } from '../application/groupTodos.service'
-import { GroupTodos } from '../domain/groupTodos.entity'
 import { SaveTodosDto } from '../dto/groupTodos.save.dto'
 
 @Controller('groupTodos')
