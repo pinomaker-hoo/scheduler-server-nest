@@ -38,12 +38,12 @@ export class GroupUserService {
     }
   }
 
-  async deleteGroupUser(idx: number) {
+  async deleteGroupUser(user: User, groupIdx: number) {
     try {
       const findGroupUser = await this.groupUserRepository.findOne({
-        where: { idx },
+        where: { user: user.idx, group: groupIdx },
       })
-      return await this.groupUserRepository.delete(idx)
+      return await this.groupUserRepository.delete(findGroupUser.idx)
     } catch (err) {
       console.log(err)
       throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
