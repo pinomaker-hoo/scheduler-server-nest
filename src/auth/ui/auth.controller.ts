@@ -67,7 +67,7 @@ export class AuthController {
   async updatePassword(@Req() req, @Body() body) {
     const response = await this.authService.updatePassword(
       req.user,
-      body.pasword,
+      body.password,
     )
     return ApiResponse.of({
       data: response,
@@ -78,7 +78,7 @@ export class AuthController {
 
   @Delete()
   @UseGuards(JwtGuard)
-  async deleteUser(@Req() req, @Body() body) {
+  async deleteUser(@Req() req) {
     return await this.authService.deleteUser(req.user)
   }
 }
