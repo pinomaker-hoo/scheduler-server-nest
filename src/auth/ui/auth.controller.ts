@@ -54,13 +54,26 @@ export class AuthController {
   @Patch('/image')
   @UseGuards(JwtGuard)
   async updateImage(@Req() req, @Body() body) {
-    return await this.authService.updateImage(req.user, body.base)
+    const response = await this.authService.updateImage(req.user, body.base)
+    return ApiResponse.of({
+      data: response,
+      message: 'Success Find User',
+      statusCode: 200,
+    })
   }
 
   @Patch()
   @UseGuards(JwtGuard)
   async updatePassword(@Req() req, @Body() body) {
-    return await this.authService.updatePassword(req.user, body.pasword)
+    const response = await this.authService.updatePassword(
+      req.user,
+      body.pasword,
+    )
+    return ApiResponse.of({
+      data: response,
+      message: 'Success Find User',
+      statusCode: 200,
+    })
   }
 
   @Delete()
