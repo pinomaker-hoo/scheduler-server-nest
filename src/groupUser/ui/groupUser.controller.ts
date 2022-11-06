@@ -1,5 +1,4 @@
 import {
-  Body,
   Controller,
   Delete,
   Get,
@@ -9,6 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common'
 import { JwtGuard } from 'src/auth/passport/auth.jwt.guard'
+import { ApiResponse } from 'src/common/dto/response.dto'
 import { GroupUserService } from '../application/groupUser.service'
 
 @Controller('groupUser')
@@ -18,19 +18,36 @@ export class GroupUserController {
   @Post('/:id')
   @UseGuards(JwtGuard)
   async saveGroupUser(@Req() req, @Param('id') idx: string) {
-    console.log(idx, req.user)
-    return await this.groupUserService.saveUser(req.user, Number(idx))
+    const response = await this.groupUserService.saveUser(req.user, Number(idx))
+    return ApiResponse.of({
+      data: response,
+      message: 'Success Save Group User',
+      statusCode: 200,
+    })
   }
 
   @Get()
   @UseGuards(JwtGuard)
   async getList(@Req() req) {
-    return await this.groupUserService.findGroupUserList(req.user)
+    const response = await this.groupUserService.findGroupUserList(req.user)
+    return ApiResponse.of({
+      data: response,
+      message: 'Success Get Group User',
+      statusCode: 200,
+    })
   }
 
   @Delete('/:id')
   @UseGuards(JwtGuard)
   async deleteGroupUser(@Param('id') idx: string, @Req() req) {
-    return await this.groupUserService.deleteGroupUser(req.user, Number(idx))
+    const response = await this.groupUserService.deleteGroupUser(
+      req.user,
+      Number(idx),
+    )
+    return ApiResponse.of({
+      data: response,
+      message: 'Success Delete Group User',
+      statusCode: 200,
+    })
   }
 }
