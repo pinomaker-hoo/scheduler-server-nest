@@ -29,7 +29,8 @@ export class GroupUserController {
   }
 
   @Delete('/:id')
-  async deleteGroupUser(@Param('id') idx: string) {
-    return await this.groupUserService.deleteGroupUser(Number(idx))
+  @UseGuards(JwtGuard)
+  async deleteGroupUser(@Param('id') idx: string, @Req() req) {
+    return await this.groupUserService.deleteGroupUser(req.user, Number(idx))
   }
 }
