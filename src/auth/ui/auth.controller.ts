@@ -1,13 +1,5 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common'
-import { Response } from 'express'
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common'
+import { ApiResponse } from 'src/common/dto/response.dto'
 import { AuthService } from '../application/auth.service'
 import { User } from '../domain/user.entity'
 import { RequestUserSaveDto } from '../dto/user.save.dto'
@@ -17,26 +9,36 @@ import { LocalGuard } from '../passport/auth.local.guard'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get()
-  async test() {
-    return 'Hello world'
-  }
-
   @Post()
   async localRegister(@Body() body: RequestUserSaveDto) {
-    return await this.authService.localRegister(body)
+    const response = await this.authService.localRegister(body)
+    return ApiResponse.of({
+      data: response,
+      message: 'Success Save User',
+      statusCode: 200,
+    })
   }
 
   @Post('/local')
   @UseGuards(LocalGuard)
   async localLogin(@Req() req) {
-    const { user }: { user: User } = req
+    const { user } = req
     const token = await this.authService.signJwtWithIdx(user.idx)
-    return { user, token }
+    const response = { user, token }
+    return ApiResponse.of({
+      data: response,
+      message: 'Success Local Login',
+      statusCode: 200,
+    })
   }
 
   @Post('/check')
-  async findUserById(@Body() body): Promise<User> {
-    return await this.authService.findById(body.id)
+  async findUserById(@Body() body) {
+    const response = await this.authService.findById(body.id)
+    return ApiResponse.of({
+      data: response,
+      message: 'Success Find User',
+      statusCode: 200,
+    })
   }
 }
