@@ -11,15 +11,19 @@ export class GroupService {
   constructor(private readonly groupRepository: GroupRepository) {}
 
   async saveGroup(madePerson: User, body: SaveGroupDto): Promise<Group> {
-    console.log(madePerson)
-    const group = this.groupRepository.create({
-      madePerson,
-      name: body.name,
-      color: body.color,
-      password: body.password,
-      memberCount: body.memberCount,
-    })
-    return await this.groupRepository.save(group)
+    try {
+      const group = this.groupRepository.create({
+        madePerson,
+        name: body.name,
+        color: body.color,
+        password: body.password,
+        memberCount: body.memberCount,
+      })
+      return await this.groupRepository.save(group)
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
+    }
   }
 
   async getGroupList(): Promise<Group[]> {
