@@ -16,6 +16,8 @@ export class GroupTodos extends BaseTimeEntity {
   @Column()
   place: string
 
-  @ManyToOne((type) => Group, (group) => group.groupTodos)
+  @ManyToOne((type) => Group, (group) => group.groupTodos, {
+    onDelete: 'CASCADE',
+  })
   group: Group
 }

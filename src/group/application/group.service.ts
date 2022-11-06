@@ -44,4 +44,13 @@ export class GroupService {
       throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
     }
   }
+
+  async deleteGroup(idx: number) {
+    try {
+      return await this.groupRepository.delete(idx)
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
+    }
+  }
 }

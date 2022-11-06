@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -30,5 +31,10 @@ export class GroupController {
   @Get('/:id')
   async getGroup(@Param('id') idx: string) {
     return await this.groupService.findGroupWithTodo(Number(idx))
+  }
+
+  @Delete('/:id')
+  async deleteGroup(@Param('id') idx: string) {
+    return await this.groupService.deleteGroup(Number(idx))
   }
 }

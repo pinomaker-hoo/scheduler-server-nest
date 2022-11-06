@@ -11,6 +11,8 @@ export class GroupUser extends BaseTimeEntity {
   @ManyToOne((type) => User, (user) => user.groupUser)
   user: User
 
-  @ManyToOne((type) => Group, (group) => group.groupUser)
+  @ManyToOne((type) => Group, (group) => group.groupUser, {
+    onDelete: 'CASCADE',
+  })
   group: Group
 }
