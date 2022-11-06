@@ -105,4 +105,23 @@ export class AuthService {
       throw new HttpException('Not Found!!', HttpStatus.BAD_REQUEST)
     }
   }
+
+  async updatePassword(user: User, password: string) {
+    try {
+      const hash = await bcrypt.hash(password, 5)
+      return await this.userRepository.update(user.idx, { password: hash })
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('Not Found!!', HttpStatus.BAD_REQUEST)
+    }
+  }
+
+  async deleteUser(user: User) {
+    try {
+      return await this.userRepository.delete(user.idx)
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('Not Found!!', HttpStatus.BAD_REQUEST)
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Patch,
   Post,
@@ -54,5 +55,17 @@ export class AuthController {
   @UseGuards(JwtGuard)
   async updateImage(@Req() req, @Body() body) {
     return await this.authService.updateImage(req.user, body.base)
+  }
+
+  @Patch()
+  @UseGuards(JwtGuard)
+  async updatePassword(@Req() req, @Body() body) {
+    return await this.authService.updatePassword(req.user, body.pasword)
+  }
+
+  @Delete()
+  @UseGuards(JwtGuard)
+  async deleteUser(@Req() req, @Body() body) {
+    return await this.authService.deleteUser(req.user)
   }
 }
