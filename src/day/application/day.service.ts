@@ -6,6 +6,7 @@ import { DayRepository } from '../infrastructure/day.repository'
 @Injectable()
 export class DayService {
   constructor(private readonly dayRepository: DayRepository) {}
+
   async saveDay(user: User, name: string, date: string) {
     try {
       const findDay = await this.findDayByUser(user)
@@ -20,7 +21,6 @@ export class DayService {
 
   async updateDay(day: Day, name: string, date: string) {
     try {
-      console.log(name, date)
       if (name && date)
         return await this.dayRepository.update(day, { name, date })
       if (name) return await this.dayRepository.update(day, { name })
