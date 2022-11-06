@@ -28,8 +28,7 @@ export class AuthService {
       const findUser: User = await this.userRepository.findOne({
         where: { id },
       })
-      if (!this.compareHash(password, findUser.password))
-        throw new HttpException('Password Error', HttpStatus.BAD_REQUEST)
+      await this.compareHash(password, findUser.password)
       return findUser
     } catch (err) {
       console.log(err)
@@ -38,9 +37,9 @@ export class AuthService {
   }
 
   /** password, hash된 password를 받아서 같은 지 검증*/
-  async compareHash(password: string, hash: string): Promise<boolean> {
+  async compareHash(password: string, hash: string) {
     const rs = await bcrypt.compare(password, hash)
-    return rs ? true : false
+    if (!rs) throw new HttpException('Password Error', HttpStatus.BAD_REQUEST)
   }
 
   /** id 중복 체크 */

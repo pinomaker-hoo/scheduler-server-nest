@@ -29,10 +29,10 @@ export class AuthController {
 
   @Post('/local')
   @UseGuards(LocalGuard)
-  async localLogin(@Req() req, @Res() res: Response) {
+  async localLogin(@Req() req) {
     const { user }: { user: User } = req
     const token = await this.authService.signJwtWithIdx(user.idx)
-    res.send({ user, token })
+    return { user, token }
   }
 
   @Post('/check')
