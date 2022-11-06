@@ -22,15 +22,23 @@ export class GroupService {
   }
 
   async getGroupList(): Promise<Group[]> {
-    const data = await this.groupRepository.find({ relations: ['madePerson'] })
-    console.log(data)
-    return data
+    try {
+      return await this.groupRepository.find({ relations: ['madePerson'] })
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
+    }
   }
 
   async findGroupByIdx(idx: number): Promise<Group> {
-    return await this.groupRepository.findOne({
-      where: { idx },
-    })
+    try {
+      return await this.groupRepository.findOne({
+        where: { idx },
+      })
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
+    }
   }
 
   async findGroupWithTodo(idx: number) {
