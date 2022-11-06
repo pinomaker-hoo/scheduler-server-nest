@@ -3,6 +3,7 @@ import { User } from 'src/auth/domain/user.entity'
 import { GroupUserService } from 'src/groupUser/application/groupUser.service'
 import { Group } from '../domain/group.entity'
 import { SaveGroupDto } from '../dto/group.save.dto'
+import { UpdateGroupDto } from '../dto/group.update.dto'
 import { GroupRepository } from '../infrastructure/group.repository'
 
 @Injectable()
@@ -56,6 +57,20 @@ export class GroupService {
   async deleteGroup(idx: number) {
     try {
       return await this.groupRepository.delete(idx)
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
+    }
+  }
+
+  async updateGroup(idx: number, body: UpdateGroupDto) {
+    try {
+      return await this.groupRepository.update(idx, {
+        name: body.name,
+        color: body.color,
+        memberCount: body.memberCount,
+        password: body.password,
+      })
     } catch (err) {
       console.log(err)
       throw new HttpException('BAD', HttpStatus.BAD_REQUEST)

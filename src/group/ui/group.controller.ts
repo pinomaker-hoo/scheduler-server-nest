@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common'
@@ -12,6 +13,7 @@ import { JwtGuard } from 'src/auth/passport/auth.jwt.guard'
 import { GroupService } from '../application/group.service'
 import { Group } from '../domain/group.entity'
 import { SaveGroupDto } from '../dto/group.save.dto'
+import { UpdateGroupDto } from '../dto/group.update.dto'
 
 @Controller('group')
 export class GroupController {
@@ -36,5 +38,10 @@ export class GroupController {
   @Delete('/:id')
   async deleteGroup(@Param('id') idx: string) {
     return await this.groupService.deleteGroup(Number(idx))
+  }
+
+  @Put('/:id')
+  async updateGroup(@Param('id') idx: string, @Body() body: UpdateGroupDto) {
+    return await this.groupService.updateGroup(Number(idx), body)
   }
 }
