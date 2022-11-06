@@ -4,6 +4,7 @@ import { UserRepository } from '../infrastructure/user.repository'
 import * as bcrypt from 'bcryptjs'
 import { JwtService } from '@nestjs/jwt'
 import { RequestUserSaveDto } from '../dto/user.save.dto'
+import { decode } from 'node-base64-image'
 
 @Injectable()
 export class AuthService {
@@ -14,11 +15,13 @@ export class AuthService {
 
   async localRegister(body: RequestUserSaveDto): Promise<User> {
     try {
+      const path = await this.baseToImg(body.base)
       const hash = await bcrypt.hash(body.password, 5)
       const user: User = this.userRepository.create({
         name: body.name,
         id: body.id,
         password: hash,
+        image: path,
       })
       return await this.userRepository.save(user)
     } catch (err) {
@@ -70,6 +73,36 @@ export class AuthService {
     } catch (err) {
       console.log(err)
       throw new HttpException('ERROR', HttpStatus.BAD_REQUEST)
+    }
+  }
+
+  async baseToImg(encode: string) {
+    try {
+      const path: string = `./src/source/img/${await this.getNumber()}-${Date.now()}`
+      const image = await this.decodeBase(encode, path, 'jpg')
+      return path
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async getNumber() {
+    let number = Math.floor(Math.random() * 1000000) + 100000
+    if (number > 1000000) number -= 100000
+    return number
+  }
+
+  async decodeBase(image: string, fileName: string, ext: string) {
+    return await decode(image, { fname: fileName, ext: ext })
+  }
+
+  async updateImage(user: User, base: string) {
+    try {
+      const path = await this.baseToImg(base)
+      return await this.userRepository.update(user.idx, { image: path })
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('Not Found!!', HttpStatus.BAD_REQUEST)
     }
   }
 }

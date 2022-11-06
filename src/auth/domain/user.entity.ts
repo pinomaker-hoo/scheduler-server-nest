@@ -19,6 +19,9 @@ export class User extends BaseTimeEntity {
   @Column({ type: 'varchar', length: 50 })
   name: string
 
+  @Column({ type: 'varchar', nullable: true })
+  image: string
+
   @OneToMany((type) => Todos, (todos) => todos.user)
   todos: Todos[]
 

@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common'
 import { ApiResponse } from 'src/common/dto/response.dto'
 import { AuthService } from '../application/auth.service'
 import { RequestUserSaveDto } from '../dto/user.save.dto'
+import { JwtGuard } from '../passport/auth.jwt.guard'
 import { LocalGuard } from '../passport/auth.local.guard'
 
 @Controller('auth')
@@ -39,5 +48,11 @@ export class AuthController {
       message: 'Success Find User',
       statusCode: 200,
     })
+  }
+
+  @Patch('/image')
+  @UseGuards(JwtGuard)
+  async updateImage(@Req() req, @Body() body) {
+    return await this.authService.updateImage(req.user, body.base)
   }
 }
