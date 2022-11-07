@@ -17,6 +17,7 @@ export class GroupService {
         color: body.color,
         password: body.password,
         memberCount: body.memberCount,
+        madePersonIdx: madePerson.idx,
       })
       return await this.groupRepository.save(group)
     } catch (err) {

@@ -109,7 +109,7 @@ export class AuthService {
   async updatePassword(user: User, password: string) {
     try {
       const hash = await bcrypt.hash(password, 5)
-      return await this.userRepository.update(user, { password: hash })
+      return await this.userRepository.update(user.idx, { password: hash })
     } catch (err) {
       console.log(err)
       throw new HttpException('Not Found!!', HttpStatus.BAD_REQUEST)

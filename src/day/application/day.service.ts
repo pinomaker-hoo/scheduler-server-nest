@@ -22,7 +22,7 @@ export class DayService {
   async updateDay(day: Day, name: string, date: string) {
     try {
       if (name && date)
-        return await this.dayRepository.update(day, { name, date })
+        return await this.dayRepository.update(day.idx, { name, date })
       if (name) return await this.dayRepository.update(day, { name })
       if (date) return await this.dayRepository.update(day, { date })
     } catch (err) {

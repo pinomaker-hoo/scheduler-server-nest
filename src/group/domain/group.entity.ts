@@ -19,6 +19,9 @@ export class Group extends BaseTimeEntity {
   name: string
 
   @Column()
+  madePersonIdx: number
+
+  @Column()
   memberCount: number
 
   @Column()
