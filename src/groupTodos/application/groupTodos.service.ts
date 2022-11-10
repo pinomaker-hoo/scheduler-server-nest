@@ -21,9 +21,12 @@ export class GroupTodosService {
     }
   }
 
-  async saveTodos(idx: number, body: SaveTodosDto): Promise<GroupTodos> {
+  async saveTodos(idx: number, body: SaveTodosDto) {
     try {
       const group: Group = await this.groupService.findGroupByIdx(idx)
+      if (body.year) {
+        return this.saveTodosLoop(group, body)
+      }
       const todos = this.groupTodosRepository.create({
         group,
         date: body.date,
@@ -31,6 +34,25 @@ export class GroupTodosService {
         place: body.place,
       })
       return await this.groupTodosRepository.save(todos)
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
+    }
+  }
+
+  async saveTodosLoop(group: Group, body: SaveTodosDto) {
+    try {
+      for (let i = 2020; i < 2030; i++) {
+        const date = body.date.substring(5)
+        const todos = this.groupTodosRepository.create({
+          group,
+          date: `${i}-${date}`,
+          title: body.title,
+          place: body.place,
+        })
+        await this.groupTodosRepository.save(todos)
+      }
+      return true
     } catch (err) {
       console.log(err)
       throw new HttpException('BAD', HttpStatus.BAD_REQUEST)

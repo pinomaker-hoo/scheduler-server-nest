@@ -17,8 +17,11 @@ export class TodosService {
     }
   }
 
-  async saveTodos(user: User, body: SaveTodosDto): Promise<Todos> {
+  async saveTodos(user: User, body: SaveTodosDto) {
     try {
+      if (body.year) {
+        return this.saveTodosLoop(user, body)
+      }
       const todos = this.todosRepository.create({
         user,
         date: body.date,
@@ -26,6 +29,24 @@ export class TodosService {
         place: body.place,
       })
       return await this.todosRepository.save(todos)
+    } catch (err) {
+      console.log(err)
+      throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
+    }
+  }
+  async saveTodosLoop(user: User, body: SaveTodosDto) {
+    try {
+      for (let i = 2020; i < 2030; i++) {
+        const date = body.date.substring(5)
+        const todos = this.todosRepository.create({
+          user,
+          date: `${i}-${date}`,
+          title: body.title,
+          place: body.place,
+        })
+        await this.todosRepository.save(todos)
+      }
+      return true
     } catch (err) {
       console.log(err)
       throw new HttpException('BAD', HttpStatus.BAD_REQUEST)
