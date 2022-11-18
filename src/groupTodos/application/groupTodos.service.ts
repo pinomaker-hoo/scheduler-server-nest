@@ -24,9 +24,6 @@ export class GroupTodosService {
   async saveTodos(idx: number, body: SaveTodosDto) {
     try {
       const group: Group = await this.groupService.findGroupByIdx(idx)
-      if (body.year) {
-        return this.saveTodosLoop(group, body)
-      }
       const todos = this.groupTodosRepository.create({
         group,
         date: body.date,
